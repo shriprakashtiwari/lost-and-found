@@ -1,0 +1,68 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found</title>
+
+    {% bootstrap_css %} <!-- Include Bootstrap CSS -->
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-4">
+        <h1 class="text-center text-primary">🔍 Lost & Found Items</h1>
+
+        <!-- Report Lost Item Button -->
+        <div class="text-center my-4">
+            <a href="{% url 'add_lost_item' %}" class="btn btn-success">
+                ➕ Report a Lost Item
+            </a>
+        </div>
+
+        <!-- Display Lost Items -->
+        <div class="row">
+            {% for item in items %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description|slice:":150" }}...</p>  <!-- Shorten description for better layout -->
+                            <p class="text-muted">📍 Location: {{ item.location }}</p>
+                            <p class="text-muted">📅 Lost on: {{ item.date_lost }}</p>
+                            
+                            <!-- Contact Info Button -->
+                            <button class="btn btn-outline-primary btn-sm mt-2" 
+                                    onclick="showContact('{{ item.contact_info }}')">
+                                📞 Contact Info
+                            </button>
+
+                            <!-- Claim Button (only visible if item is not claimed) -->
+                            {% if not item.claimed %}
+                                <a href="{% url 'claim_item' item.id %}" class="btn btn-warning btn-sm mt-2">Claim Item</a>
+                            {% else %}
+                                <span class="badge bg-success mt-2">Claimed</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">No lost items found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% bootstrap_javascript %} <!-- Include Bootstrap JS -->
+
+    <!-- JavaScript to Show Contact Info -->
+    <script>
+        function showContact(contact) {
+            alert("Contact Info: " + contact);
+        }
+    </script>
+
+</body>
+
+</html>

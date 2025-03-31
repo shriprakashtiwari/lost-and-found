@@ -1,0 +1,58 @@
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found Items</title>
+    {% bootstrap_css %}
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h2 class="text-center text-primary">Lost and Found Items</h2>
+
+        <div class="text-center mb-3">
+            <a href="{% url 'add_item' %}" class="btn btn-primary">Add Lost Item</a>
+        </div>
+
+        <!-- Filter and Display Items -->
+        <div class="mb-3">
+            <form method="get" class="d-flex justify-content-center">
+                <select name="condition" class="form-select" onchange="this.form.submit()">
+                    <option value="Lost" {% if condition_filter == 'Lost' %}selected{% endif %}>Lost</option>
+                    <option value="Found" {% if condition_filter == 'Found' %}selected{% endif %}>Found</option>
+                </select>
+            </form>
+        </div>
+
+        <div class="row">
+            {% for item in items %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="Item Image" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                            <p class="card-text"><strong>Location:</strong> {{ item.location }}</p>
+                            <p class="card-text"><strong>Condition:</strong> {{ item.condition }}</p>
+                            <p class="card-text"><strong>Contact:</strong> {{ item.contact_info }}</p>
+                            {% if not item.claimed %}
+                                <a href="{% url 'claim_item' item.id %}" class="btn btn-success">Claim Item</a>
+                            {% else %}
+                                <span class="badge bg-success">Claimed</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% bootstrap_javascript %}
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+{% extends 'lostfoundapp/base.html' %}
+
+{% block title %}Claim Lost Item{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">Claim Lost Item</h2>
+
+    <div class="card shadow-sm">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" class="card-img-top" alt="Lost Item Image">
+        {% endif %}
+
+        <div class="card-body">
+            <h4 class="card-title">{{ item.name }}</h4>
+            <p class="card-text"><strong>Description:</strong> {{ item.description }}</p>
+            <p class="card-text"><strong>Location:</strong> {{ item.location }}</p>
+            <p class="card-text"><strong>Date Lost:</strong> {{ item.date_lost }}</p>
+
+            <!-- Contact Info Button -->
+            <button class="btn btn-outline-primary btn-sm mt-2" onclick="showContact('{{ item.contact_info }}')">
+                📞 Show Contact Info
+            </button>
+
+            {% if item.claimed %}
+                <p class="text-center mt-3 text-success">This item has already been claimed.</p>
+            {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary mt-3 w-100">Claim this item</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="{% url 'index' %}" class="btn btn-secondary">Back to Lost & Found Items</a>
+    </div>
+</div>
+
+<script>
+    function showContact(contact) {
+        alert("📞 Contact Info: " + contact);
+    }
+</script>
+{% endblock %}

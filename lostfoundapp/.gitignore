@@ -1,0 +1,9 @@
+# Ignore environment and database files
+venv/
+.env
+db.sqlite3
+__pycache__/
+*.log
+*.pyc
+*.pyo
+migrations/__pycache__/
