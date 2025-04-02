@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() == 'true'
 
 # Allowed Hosts
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'your-generated-domain.railway.app,localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'lost-and-found-production-3907.up.railway.app,localhost,127.0.0.1').split(',')
 
 # Application definition
 INSTALLED_APPS = [
