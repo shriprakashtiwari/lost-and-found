@@ -1,9 +1,28 @@
-# Ignore environment and database files
-venv/
+# Ignore environment variables and secrets
 .env
+*.key
+
+# Ignore the database file
 db.sqlite3
+
+# Ignore Python cache files
 __pycache__/
-*.log
 *.pyc
 *.pyo
-migrations/__pycache__/
+*.pyd
+
+# Ignore virtual environment
+venv/
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Django migrations cache
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
